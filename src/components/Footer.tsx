@@ -16,7 +16,7 @@ const Footer = () => {
             href="https://github.com/FarhanZizz/"
             rel="noreferrer"
           >
-            <BsGithub className="text-[26px]"></BsGithub>
+            <BsGithub className="text-[26px] text-primary"></BsGithub>
           </a>
         </div>
         <div className="tooltip" data-tip="Linkedin">
@@ -25,7 +25,7 @@ const Footer = () => {
             href="https://www.linkedin.com/in/farhan-zizz/"
             rel="noreferrer"
           >
-            <BsLinkedin className="text-[26px]"></BsLinkedin>
+            <BsLinkedin className="text-[26px] text-primary"></BsLinkedin>
           </a>
         </div>
         <div className="tooltip" data-tip="Portfolio">
@@ -34,7 +34,7 @@ const Footer = () => {
             href="https://farhanzizz.netlify.app/"
             rel="noreferrer"
           >
-            <BsPersonRolodex className="text-[26px]"></BsPersonRolodex>
+            <BsPersonRolodex className="text-[26px] text-primary"></BsPersonRolodex>
           </a>
         </div>
       </div>

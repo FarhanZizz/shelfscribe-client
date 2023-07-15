@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { BsGoogle } from "react-icons/bs";
 import img from "../assets/book.png";
 
 const Login = () => {
@@ -54,10 +53,6 @@ const Login = () => {
             Sign in
           </button>
         </form>
-        <div className="divider">OR</div>
-        <button className="btn bg-base-100 hover:bg-base-100 text-primary  w-full">
-          <BsGoogle className="mr-2"></BsGoogle>Sign in with Google
-        </button>
         <p className="mt-4 ">
           Don't have an account?{" "}
           <Link className="link link-primary" to="/signup">

@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import img from "../assets/books.png";
-import { BsGoogle } from "react-icons/bs";
 
 const Signup = () => {
   return (
@@ -53,10 +52,7 @@ const Signup = () => {
             Sign Up
           </button>
         </form>
-        <div className="divider">OR</div>
-        <button className="btn bg-base-100 hover:bg-base-100 text-primary  w-full">
-          <BsGoogle className="mr-2"></BsGoogle>Sign in with Google
-        </button>
+
         <p className="mt-4 ">
           Already have an account?{" "}
           <Link className="link link-primary" to="/login">
