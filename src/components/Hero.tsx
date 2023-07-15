@@ -1,9 +1,10 @@
-import heroImg from "../../assets/glossary.png";
+import heroImg from "../assets/glossary.png";
+
 const Hero = () => {
   return (
     <div className="hero mt-20">
-      <div className="hero-content grid md:grid-cols-2 p-0">
-        <div className="order-2 md:order-1 w-full">
+      <div className="hero-content grid grid-cols-1 lg:grid-cols-2 p-0">
+        <div className="order-2 lg:order-1 w-full">
           <h1 className="text-5xl md:text-6xl font-bold">
             Find the book <br /> you're looking for <br /> easier to read
           </h1>
@@ -14,7 +15,7 @@ const Hero = () => {
           </p>
           <button className="btn btn-primary">Get Started</button>
         </div>
-        <img src={heroImg} className="max-w-md mx-auto order-1 md:order-2" />
+        <img src={heroImg} className="order-1 lg:order-2" />
       </div>
     </div>
   );

@@ -1,0 +1,74 @@
+[
+  {
+    "_id": "1",
+    "title": "To Kill a Mockingbird",
+    "description": "To Kill a Mockingbird is a novel by Harper Lee. Set in the 1930s in Maycomb, Alabama, the story focuses on the Finch family and their father, Atticus Finch, who defends a black man accused of raping a white woman.",
+    "genre": "Fiction",
+    "author": "Harper Lee",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/To_Kill_a_Mockingbird.JPG/220px-To_Kill_a_Mockingbird.JPG",
+    "publicationdate": "July 11, 1960"
+  },
+  {
+    "_id": "2",
+    "title": "1984",
+    "description": "1984 is a dystopian novel by George Orwell. It depicts a totalitarian society where the government controls every aspect of its citizens' lives, and the protagonist, Winston Smith, rebels against the oppressive regime.",
+    "genre": "Science Fiction",
+    "author": "George Orwell",
+    "image": "https://upload.wikimedia.org/wikipedia/en/thumb/c/c3/1984first.jpg/220px-1984first.jpg",
+    "publicationdate": "June 8, 1949"
+  },
+  {
+    "_id": "3",
+    "title": "Pride and Prejudice",
+    "description": "Pride and Prejudice is a classic romantic novel by Jane Austen. The story revolves around the Bennet family and explores themes of love, marriage, and societal expectations in 19th-century England.",
+    "genre": "Romance",
+    "author": "Jane Austen",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Prideandprejudice1894.jpg/220px-Prideandprejudice1894.jpg",
+    "publicationdate": "January 28, 1813"
+  },
+  {
+    "_id": "4",
+    "title": "The Great Gatsby",
+    "description": "The Great Gatsby is a novel by F. Scott Fitzgerald. It is set in the Roaring Twenties and follows the mysterious millionaire Jay Gatsby as he tries to win back his lost love, Daisy Buchanan.",
+    "genre": "Classic",
+    "author": "F. Scott Fitzgerald",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/The_Great_Gatsby_Cover_1925_%281%29.jpg/220px-The_Great_Gatsby_Cover_1925_%281%29.jpg",
+    "publicationdate": "April 10, 1925"
+  },
+  {
+    "_id": "5",
+    "title": "The Lord of the Rings",
+    "description": "The Lord of the Rings is an epic fantasy trilogy by J.R.R. Tolkien. It follows the journey of Frodo Baggins as he sets out to destroy the powerful One Ring and defeat the dark lord Sauron.",
+    "genre": "Fantasy",
+    "author": "J.R.R. Tolkien",
+    "image": "https://upload.wikimedia.org/wikipedia/en/thumb/8/8e/The_Lord_of_the_Rings_The_Fellowship_of_the_Ring_%282001%29_theatrical_poster.jpg/220px-The_Lord_of_the_Rings_The_Fellowship_of_the_Ring_%282001%29_theatrical_poster.jpg",
+    "publicationdate": "July 29, 1954"
+  },
+  {
+    "_id": "6",
+    "title": "Harry Potter and the Philosopher's Stone",
+    "description": "Harry Potter and the Philosopher's Stone is the first book in the Harry Potter series by J.K. Rowling. It introduces the young wizard Harry Potter as he discovers his magical abilities and attends the Hogwarts School of Witchcraft and Wizardry.",
+    "genre": "Fantasy",
+    "author": "J.K. Rowling",
+    "image": "https://upload.wikimedia.org/wikipedia/en/thumb/b/bf/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg/220px-Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg",
+    "publicationdate": "June 26, 1997"
+  },
+  {
+    "_id": "7",
+    "title": "The Catcher in the Rye",
+    "description": "The Catcher in the Rye is a coming-of-age novel by J.D. Salinger. It follows the story of Holden Caulfield, a disenchanted teenager who narrates his experiences and observations about society and the hypocrisy he perceives.",
+    "genre": "Fiction",
+    "author": "J.D. Salinger",
+    "image": "https://upload.wikimedia.org/wikipedia/en/thumb/3/32/Rye_catcher.jpg/220px-Rye_catcher.jpg",
+    "publicationdate": "July 16, 1951"
+  },
+  {
+    "_id": "8",
+    "title": "The Chronicles of Narnia",
+    "description": "The Chronicles of Narnia is a series of fantasy novels by C.S. Lewis. It transports readers to the magical world of Narnia, where they embark on various adventures with memorable characters and witness the battle between good and evil.",
+    "genre": "Fantasy",
+    "author": "C.S. Lewis",
+    "image": "https://upload.wikimedia.org/wikipedia/en/thumb/0/02/The_Chronicles_of_Narnia_box_set_cover.jpg/220px-The_Chronicles_of_Narnia_box_set_cover.jpg",
+    "publicationdate": "October 16, 1950"
+  }
+]

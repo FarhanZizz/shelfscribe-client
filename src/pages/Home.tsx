@@ -1,9 +1,11 @@
-import Hero from "../components/ui/Hero";
+import Hero from "../components/Hero";
+import RecentBooks from "../components/RecentBooks";
 
 const Home = () => {
   return (
     <div>
       <Hero />
+      <RecentBooks />
     </div>
   );
 };
