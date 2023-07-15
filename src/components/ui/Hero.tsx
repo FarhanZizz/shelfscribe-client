@@ -8,9 +8,9 @@ const Hero = () => {
             Find the book <br /> you're looking for <br /> easier to read
           </h1>
           <p className="py-6">
-            Shelfscribe: Dive into a captivating world of literary treasures.
-            Discover your next favorite book with our meticulously curated
-            catalog, where stories come alive and imaginations soar.
+            Dive into a captivating world of literary treasures. Discover your
+            next favorite book with our meticulously curated catalog, where
+            stories come alive and imaginations soar.
           </p>
           <button className="btn btn-primary">Get Started</button>
         </div>
