@@ -22,17 +22,12 @@ const Signup = () => {
     const password = form.password.value;
     const name = form.name.value;
 
-    try {
-      const signupResult = await userSignup({ email, password, name });
-      if (signupResult.data.success === true) {
-        const loginResult = await userLogin({ email, password });
-        // If successful, set the access token to localStorage
-        localStorage.setItem("accessToken", loginResult.data.data.accessToken);
-        navigate("/all-books");
-      }
-    } catch (error) {
-      console.error("Error during signup or login:", error);
-      // Handle error appropriately, e.g., display an error message to the user
+    const signupResult = await userSignup({ email, password, name });
+    if (signupResult.data.success === true) {
+      const loginResult = await userLogin({ email, password });
+      // If successful, set the access token to localStorage
+      localStorage.setItem("accessToken", loginResult.data.data.accessToken);
+      navigate("/all-books");
     }
   };
 
