@@ -14,6 +14,8 @@ const RecentBooks = () => {
       <div className="grid lg:grid-cols-5 md:grid-cols-3 gap-10">
         {data?.data.map((book: IBook) => (
           <Book
+            key={book._id}
+            _id={book._id}
             title={book.title}
             image={book.image}
             publication={book.publication}

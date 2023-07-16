@@ -3,8 +3,28 @@ import { api } from "../../api/apislice";
 
 const bookApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    getBooks: builder.query({
-      query: () => "/all-books",
+    getBooks: builder.query<
+      IGenericResponse,
+      { searchTerm?: string; genre?: string; publication?: number }
+    >({
+      query: ({ searchTerm, genre, publication }) => {
+        let url = "/all-books";
+
+        // Append query parameters for search and filter
+        if (searchTerm) {
+          url += `?searchTerm=${searchTerm}`;
+        }
+
+        if (genre) {
+          url += `${searchTerm ? "&" : "?"}genre=${genre}`;
+        }
+
+        if (publication) {
+          url += `${searchTerm || genre ? "&" : "?"}publication=${publication}`;
+        }
+
+        return url;
+      },
     }),
     getRecentBooks: builder.query({
       query: () => "/recent-books",

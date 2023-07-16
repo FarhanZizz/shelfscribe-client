@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
 import { IBook } from "../types/globaltypes";
 
-const Book = ({ image, title, author, publication, genre }: IBook) => {
+const Book = ({ image, title, author, publication, genre, _id }: IBook) => {
   // const { image, title, author, publication, genre } = book;
   return (
-    <div>
+    <Link to={`/book/${_id}`} className="hover:drop-shadow-2xl">
       <img src={image} className="h-80 w-60 mx-auto" />
 
       <div className="mt-2">
@@ -12,7 +13,7 @@ const Book = ({ image, title, author, publication, genre }: IBook) => {
           {author} | {genre} | {publication}
         </h4>
       </div>
-    </div>
+    </Link>
   );
 };
 
