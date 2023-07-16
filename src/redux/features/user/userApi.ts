@@ -13,7 +13,17 @@ const userApi = api.injectEndpoints({
         body: credentials,
       }),
     }),
+    userSignup: builder.mutation<
+      IGenericResponse,
+      { email: string; password: string; name: string }
+    >({
+      query: (credentials) => ({
+        url: "/auth/signup",
+        method: "POST",
+        body: credentials,
+      }),
+    }),
   }),
 });
 
-export const { useUserLoginMutation } = userApi;
+export const { useUserLoginMutation, useUserSignupMutation } = userApi;
