@@ -19,8 +19,8 @@ const BookDetails = () => {
     data.data;
 
   return (
-    <div className="mt-10 flex gap-10">
-      <div className="flex gap-10 w-4/6  ">
+    <div className="mt-10 flex flex-col lg:flex-row gap-10">
+      <div className="flex flex-col md:flex-row gap-10 lg:w-4/6  ">
         <img src={image} className="h-80 w-60 mx-auto" alt="" />
         <div>
           <h1 className="text-3xl font-medium">{title}</h1>
@@ -30,7 +30,8 @@ const BookDetails = () => {
           <h1 className="text-xl mt-2">{description}</h1>
         </div>
       </div>
-      <div className="w-1/2">
+
+      <div>
         <div className="flex justify-between items-center mb-2">
           <h1 className="text-2xl mb-3">Reviews</h1>
           {token && (
