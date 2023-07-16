@@ -1,16 +1,35 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 const Navbar = () => {
+  const token = localStorage.getItem("accessToken");
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.setItem("accessToken", "");
+    navigate("/");
+  };
   const menuItems = (
     <>
       <li>
         <Link to="all-books">All Books</Link>
       </li>
-      <li>
-        <Link to="login">Login</Link>
-      </li>
-      <li>
-        <Link to="signup">Signup</Link>
-      </li>
+      {!token ? (
+        <>
+          <li>
+            <Link to="login">Login</Link>
+          </li>
+          <li>
+            <Link to="signup">Signup</Link>
+          </li>
+        </>
+      ) : (
+        <>
+          <li>
+            <Link to="add-new-book">Add New Book</Link>
+          </li>
+          <li>
+            <button onClick={handleLogout}>Logout</button>
+          </li>
+        </>
+      )}
     </>
   );
   return (

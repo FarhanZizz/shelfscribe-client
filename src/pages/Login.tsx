@@ -2,11 +2,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { Link } from "react-router-dom";
+import { Link, Router, useNavigate } from "react-router-dom";
 import img from "../assets/book.png";
 import { useUserLoginMutation } from "../redux/features/user/userApi";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [userLogin, { isLoading, isError, error }] = useUserLoginMutation();
 
   const handleSubmit = async (e) => {
@@ -15,11 +16,11 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
     await userLogin({ email, password }).then((result) => {
-      console.log(result);
       // Check if the login was successful
       if (result.data.success) {
         // If successful, set the access token to localStorage
         localStorage.setItem("accessToken", result.data.data.accessToken);
+        navigate("/all-books");
       }
     });
   };
