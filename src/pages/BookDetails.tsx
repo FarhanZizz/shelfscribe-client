@@ -3,20 +3,45 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useParams } from "react-router-dom";
 import { useSingleBookQuery } from "../redux/features/book/bookApi";
+import { useRef } from "react";
+import jwtDecode from "jwt-decode";
 
 const BookDetails = () => {
-  const token = localStorage.getItem("accessToken");
+  const nameInputRef = useRef("");
+  const reviewInputRef = useRef("");
   const params = useParams();
 
+  const token = localStorage.getItem("accessToken");
+  const user = jwtDecode(token);
+  const { name, email } = user;
+
   const { data } = useSingleBookQuery(params.id!);
-  console.log(data?.data);
 
   if (!data) {
-    return <div>Loading...</div>; // Handle loading state while data is being fetched
+    return <div>Loading...</div>;
   }
 
-  const { image, title, author, genre, publication, description, reviews } =
-    data.data;
+  const {
+    image,
+    title,
+    author,
+    genre,
+    publication,
+    description,
+    reviews,
+    userEmail,
+  } = data.data;
+
+  const handleAddReview = (e) => {
+    e.preventDefault();
+
+    const review = reviewInputRef.current.value;
+    const newReview = { name, review };
+
+    console.log(newReview);
+
+    window.add_post.close();
+  };
 
   return (
     <div className="mt-10 flex flex-col lg:flex-row gap-10">
@@ -35,9 +60,56 @@ const BookDetails = () => {
         <div className="flex justify-between items-center mb-2">
           <h1 className="text-2xl mb-3">Reviews</h1>
           {token && (
-            <button className="btn btn-primary btn-outline btn-sm">
-              Add Your review
-            </button>
+            <>
+              <button
+                onClick={() => window.add_post.showModal()}
+                className="btn btn-primary btn-outline btn-sm"
+              >
+                Add Your review
+              </button>
+              <dialog
+                id="add_post"
+                className="modal modal-bottom sm:modal-middle"
+              >
+                <form className="modal-box">
+                  <h3 className="font-bold text-lg text-center">
+                    Adding Review!
+                  </h3>
+                  <div className="flex flex-col justify-center items-center gap-5 my-6">
+                    <input
+                      type="text"
+                      value={name}
+                      readOnly
+                      placeholder="Your Name"
+                      className="input input-bordered input-primary w-full bg-base-200 focus:outline-none"
+                    />
+                    <textarea
+                      ref={reviewInputRef}
+                      className="textarea textarea-primary w-full h-28 bg-base-200 focus:outline-none"
+                      placeholder="Your Review"
+                    ></textarea>
+                  </div>
+                  <div className="modal-action">
+                    {/* if there is a button in form, it will close the modal */}
+                    <button
+                      className="btn"
+                      onClick={() => {
+                        event.preventDefault();
+                        window.add_post.close();
+                      }}
+                    >
+                      Close
+                    </button>
+                    <button
+                      className="btn btn-primary"
+                      onClick={handleAddReview}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
+              </dialog>
+            </>
           )}
         </div>
         <div className="grid grid-cols-1 gap-4">
