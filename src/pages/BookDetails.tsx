@@ -1,19 +1,25 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useParams } from "react-router-dom";
-import { useSingleBookQuery } from "../redux/features/book/bookApi";
+import {
+  useSingleBookQuery,
+  useCreateReviewMutation,
+} from "../redux/features/book/bookApi";
 import { useRef } from "react";
 import jwtDecode from "jwt-decode";
+import { toast } from "react-hot-toast";
 
 const BookDetails = () => {
   const nameInputRef = useRef("");
   const reviewInputRef = useRef("");
   const params = useParams();
+  const [createReview] = useCreateReviewMutation();
 
   const token = localStorage.getItem("accessToken");
   const user = jwtDecode(token);
-  const { name, email } = user;
+  const { name: username, email } = user;
 
   const { data } = useSingleBookQuery(params.id!);
 
@@ -32,11 +38,17 @@ const BookDetails = () => {
     userEmail,
   } = data.data;
 
-  const handleAddReview = (e) => {
+  const handleAddReview = async (e) => {
     e.preventDefault();
 
     const review = reviewInputRef.current.value;
-    const newReview = { name, review };
+    const newReview = { username, review };
+
+    await createReview({ bookId: params.id, review: newReview }).then(
+      (data) => {
+        toast.success(data.data.message);
+      }
+    );
 
     console.log(newReview);
 
@@ -78,7 +90,7 @@ const BookDetails = () => {
                   <div className="flex flex-col justify-center items-center gap-5 my-6">
                     <input
                       type="text"
-                      value={name}
+                      value={username}
                       readOnly
                       placeholder="Your Name"
                       className="input input-bordered input-primary w-full bg-base-200 focus:outline-none"

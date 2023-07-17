@@ -1,4 +1,4 @@
-import { IGenericResponse } from "../../../types/globaltypes";
+import { IGenericResponse, IReview } from "../../../types/globaltypes";
 import { api } from "../../api/apislice";
 
 const bookApi = api.injectEndpoints({
@@ -25,12 +25,14 @@ const bookApi = api.injectEndpoints({
 
         return url;
       },
+      providesTags: ["books"],
     }),
     getRecentBooks: builder.query({
       query: () => "/recent-books",
     }),
     singleBook: builder.query({
       query: (id: string) => `/book/${id}`,
+      providesTags: ["books"],
     }),
     createBook: builder.mutation<IGenericResponse, IGenericResponse>({
       query: ({ data }) => ({
@@ -40,12 +42,23 @@ const bookApi = api.injectEndpoints({
       }),
       invalidatesTags: ["books"],
     }),
-    getComment: builder.query({
-      query: (id: string) => `/comment/${id}`,
-      providesTags: ["books"],
+    createReview: builder.mutation<
+      IGenericResponse,
+      { bookId: string; review: IReview }
+    >({
+      query: ({ bookId, review }) => ({
+        url: `/add-review/${bookId}`,
+        method: "POST",
+        body: review,
+      }),
+      invalidatesTags: ["books"],
     }),
   }),
 });
 
-export const { useGetBooksQuery, useGetRecentBooksQuery, useSingleBookQuery } =
-  bookApi;
+export const {
+  useGetBooksQuery,
+  useGetRecentBooksQuery,
+  useSingleBookQuery,
+  useCreateReviewMutation,
+} = bookApi;
