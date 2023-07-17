@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { IGenericResponse, IReview } from "../../../types/globaltypes";
 import { api } from "../../api/apislice";
 
@@ -35,9 +38,10 @@ const bookApi = api.injectEndpoints({
       providesTags: ["books"],
     }),
     createBook: builder.mutation<IGenericResponse, IGenericResponse>({
-      query: ({ data }) => ({
+      query: ({ data, token }) => ({
         url: `/add-new-book`,
         method: "POST",
+        headers: { Authorization: token },
         body: data,
       }),
       invalidatesTags: ["books"],
@@ -61,4 +65,5 @@ export const {
   useGetRecentBooksQuery,
   useSingleBookQuery,
   useCreateReviewMutation,
+  useCreateBookMutation,
 } = bookApi;

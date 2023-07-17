@@ -18,7 +18,7 @@ const BookDetails = () => {
   const [createReview] = useCreateReviewMutation();
 
   const token = localStorage.getItem("accessToken");
-  const user = jwtDecode(token);
+  const user = jwtDecode(token!);
   const { name: username, email } = user;
 
   const { data } = useSingleBookQuery(params.id!);
@@ -57,7 +57,7 @@ const BookDetails = () => {
 
   return (
     <div className="mt-10 flex flex-col lg:flex-row gap-10">
-      <div className="flex flex-col md:flex-row gap-10 lg:w-4/6  ">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:w-1/2  ">
         <img src={image} className="h-80 w-60 mx-auto" alt="" />
         <div>
           <h1 className="text-3xl font-medium">{title}</h1>
@@ -68,10 +68,10 @@ const BookDetails = () => {
         </div>
       </div>
 
-      <div>
+      <div className="w-full lg:w-2/5 mx-auto">
         <div className="flex justify-between items-center mb-2">
           <h1 className="text-2xl mb-3">Reviews</h1>
-          {token && (
+          {token && email && (
             <>
               <button
                 onClick={() => window.add_post.showModal()}
@@ -124,13 +124,19 @@ const BookDetails = () => {
             </>
           )}
         </div>
-        <div className="grid grid-cols-1 gap-4">
-          {reviews.map((review: { username: string; review: string }) => (
-            <div className="bg-base-200 px-5 py-3 rounded-lg">
-              <span className="text-sm text-primary">{review.username}</span>
-              <h1 className="text-lg">{review.review}</h1>
+        <div className="grid grid-cols-1 w-full gap-4">
+          {reviews.length ? (
+            reviews.map((review: { username: string; review: string }) => (
+              <div className="bg-base-200 px-5 py-3 rounded-lg">
+                <span className="text-sm text-primary">{review.username}</span>
+                <h1 className="text-lg">{review.review}</h1>
+              </div>
+            ))
+          ) : (
+            <div className="bg-base-200 p-5 rounded-lg">
+              <h1 className="text-lg text-center">No Reviews Yet!</h1>
             </div>
-          ))}
+          )}
         </div>
       </div>
     </div>
