@@ -10,7 +10,7 @@ import {
   useCreateReviewMutation,
   useDeleteBookMutation,
 } from "../redux/features/book/bookApi";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import jwtDecode from "jwt-decode";
 import { toast } from "react-hot-toast";
 
@@ -18,7 +18,7 @@ const BookDetails = () => {
   const navigate = useNavigate();
   const reviewInputRef = useRef("");
   const params = useParams();
-  const [deleteBook, { data: result }] = useDeleteBookMutation();
+  const [deleteBook] = useDeleteBookMutation();
   const [createReview] = useCreateReviewMutation();
 
   const token = localStorage.getItem("accessToken");
