@@ -8,10 +8,7 @@ const AddNewBook = () => {
   const user: { email: string; nane: string } = jwtDecode(token!);
   const [createBook] = useCreateBookMutation();
 
-  const handleSubmit = async (e: {
-    preventDefault: () => void;
-    target: any;
-  }) => {
+  const handleSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const form = e.target;
     const title = form.title.value;

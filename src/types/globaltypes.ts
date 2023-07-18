@@ -49,3 +49,17 @@ export type IUser = {
   email: string;
   name: string;
 };
+declare global {
+  interface Window {
+    add_post: typeof globalThis & {
+      showModal: () => void;
+      close: () => void;
+      // Add any other methods or properties as needed
+    };
+    delete_confirm: typeof globalThis & {
+      showModal: () => void;
+      close: () => void;
+      // Add any other methods or properties as needed
+    };
+  }
+}

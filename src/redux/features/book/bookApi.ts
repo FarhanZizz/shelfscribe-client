@@ -91,7 +91,7 @@ const bookApi = api.injectEndpoints({
     }),
     addToWishlist: builder.mutation<
       IGenericResponse,
-      { data: IGenericResponse; token: string }
+      { data: { book: string }; token: string }
     >({
       query: ({ data, token }) => ({
         url: `/user/add-to-wishlist`,
@@ -103,7 +103,7 @@ const bookApi = api.injectEndpoints({
     }),
     addToReading: builder.mutation<
       IGenericResponse,
-      { data: IGenericResponse; token: string }
+      { data: { book: string }; token: string }
     >({
       query: ({ data, token }) => ({
         url: `/user/add-to-reading`,

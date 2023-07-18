@@ -6,18 +6,19 @@ import {
   useAddToWishlistMutation,
   useAddToReadingMutation,
 } from "../redux/features/book/bookApi";
-import { useRef, RefObject } from "react";
 import jwtDecode from "jwt-decode";
 import { toast } from "react-hot-toast";
+import { useRef, RefObject } from "react";
 
 const BookDetails = () => {
+  const reviewInputRef: RefObject<HTMLInputElement | null> =
+    useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
-  const reviewInputRef = useRef("");
   const params = useParams();
   const [deleteBook] = useDeleteBookMutation();
   const [createReview] = useCreateReviewMutation();
-  const [addToWishlist, { error }] = useAddToWishlistMutation();
-  const [addToReading, { error: errorMessage }] = useAddToReadingMutation();
+  const [addToWishlist] = useAddToWishlistMutation();
+  const [addToReading] = useAddToReadingMutation();
 
   const token = localStorage.getItem("accessToken")!;
   const user: { email: string; name: string } = jwtDecode(token);
@@ -44,13 +45,17 @@ const BookDetails = () => {
   const handleAddReview = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    const review: string = reviewInputRef.current.value || "";
+    const review = reviewInputRef.current?.value || "";
 
-    const newReview = { username, review };
+    const newReview: { username: string; review: string } = {
+      username,
+      review,
+    };
 
-    await createReview({ bookId: params.id, review: newReview }).then(
+    await createReview({ bookId: params.id!, review: newReview }).then(
       (data) => {
-        toast.success(data.data.message);
+        console.log(data);
+        toast.success("Review Added Successfully!");
       }
     );
 
@@ -66,21 +71,21 @@ const BookDetails = () => {
   const handleAddToWishlist = async () => {
     const wishlist = { book: _id };
     await addToWishlist({ data: wishlist, token: token })
-      .then((data) => {
-        toast.success(data.data.message);
+      .then(() => {
+        toast.success("Added To wishlist");
       })
-      .catch((err) => {
-        toast.error(error.data.message);
+      .catch(() => {
+        toast.error("Already in Wishlist");
       });
   };
   const handleAddToReading = async () => {
     const reading = { book: _id };
     await addToReading({ data: reading, token: token })
-      .then((data) => {
-        toast.success(data.data.message);
+      .then(() => {
+        toast.success("Added To Currently Reading");
       })
-      .catch((err) => {
-        toast.error(errorMessage.data.message);
+      .catch(() => {
+        toast.error("Already in Currently Reading");
       });
   };
 
@@ -131,7 +136,7 @@ const BookDetails = () => {
                       <div className="modal-action">
                         {/* if there is a button in form, it will close the modal */}
                         <button
-                          onClick={() => {
+                          onClick={(event) => {
                             event.preventDefault();
                             window.delete_confirm.close();
                           }}
@@ -221,12 +226,16 @@ const BookDetails = () => {
         </div>
         <div className="grid grid-cols-1 w-full gap-4">
           {allreviews.length ? (
-            allreviews.map((review: { username: string; review: string }) => (
-              <div className="bg-base-200 px-5 py-3 rounded-lg">
-                <span className="text-sm text-primary">{review.username}</span>
-                <h1 className="text-lg">{review.review}</h1>
-              </div>
-            ))
+            allreviews.map(
+              (review: { username: string; review: string }, index) => (
+                <div key={index} className="bg-base-200 px-5 py-3 rounded-lg">
+                  <span className="text-sm text-primary">
+                    {review.username}
+                  </span>
+                  <h1 className="text-lg">{review.review}</h1>
+                </div>
+              )
+            )
           ) : (
             <div className="bg-base-200 p-5 rounded-lg">
               <h1 className="text-lg text-center">No Reviews Yet!</h1>
