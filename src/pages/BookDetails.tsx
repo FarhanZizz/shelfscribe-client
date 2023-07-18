@@ -22,9 +22,10 @@ const BookDetails = () => {
   const [addToWishlist] = useAddToWishlistMutation();
   const [addToReading] = useAddToReadingMutation();
 
-  const token = localStorage.getItem("accessToken")!;
-  const user: { email: string; name: string } = jwtDecode(token);
-  const { name: username, email } = user;
+  const token = localStorage.getItem("accessToken");
+  const user = token ? jwtDecode<{ email: string; name: string }>(token) : null;
+  const username = user?.name || "";
+  const email = user?.email || "";
 
   const { data } = useSingleBookQuery({ id: params.id! }!);
 
@@ -62,14 +63,14 @@ const BookDetails = () => {
   };
 
   const handleBookDelete = async () => {
-    await deleteBook({ id: params.id!, token: token });
+    await deleteBook({ id: params.id!, token: token! });
     navigate("/all-books");
     toast.success("Book Deleted Successfully");
   };
 
   const handleAddToWishlist = async () => {
     const wishlist = { book: _id };
-    await addToWishlist({ data: wishlist, token: token })
+    await addToWishlist({ data: wishlist, token: token! })
       .then(() => {
         toast.success("Added To wishlist");
       })
@@ -79,7 +80,7 @@ const BookDetails = () => {
   };
   const handleAddToReading = async () => {
     const reading = { book: _id };
-    await addToReading({ data: reading, token: token })
+    await addToReading({ data: reading, token: token! })
       .then(() => {
         toast.success("Added To Currently Reading");
       })
