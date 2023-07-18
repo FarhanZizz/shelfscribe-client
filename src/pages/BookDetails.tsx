@@ -10,6 +10,7 @@ import {
   useCreateReviewMutation,
   useDeleteBookMutation,
   useAddToWishlistMutation,
+  useAddToReadingMutation,
 } from "../redux/features/book/bookApi";
 import { useRef } from "react";
 import jwtDecode from "jwt-decode";
@@ -22,6 +23,7 @@ const BookDetails = () => {
   const [deleteBook] = useDeleteBookMutation();
   const [createReview] = useCreateReviewMutation();
   const [addToWishlist, { error }] = useAddToWishlistMutation();
+  const [addToReading, { error: errorMessage }] = useAddToReadingMutation();
 
   const token = localStorage.getItem("accessToken");
   const user = jwtDecode(token!);
@@ -77,6 +79,16 @@ const BookDetails = () => {
         toast.error(error.data.message);
       });
   };
+  const handleAddToReading = async () => {
+    const reading = { book: _id };
+    await addToReading({ data: reading, token: token })
+      .then((data) => {
+        toast.success(data.data.message);
+      })
+      .catch((err) => {
+        toast.error(errorMessage.data.message);
+      });
+  };
 
   return (
     <div className="mt-10 flex flex-col lg:flex-row gap-10">
@@ -91,7 +103,10 @@ const BookDetails = () => {
               >
                 Add to Wishlist
               </button>
-              <button className="btn btn-primary w-60 btn-sm btn-outline">
+              <button
+                onClick={handleAddToReading}
+                className="btn btn-primary w-60 btn-sm btn-outline"
+              >
                 Currently Reading
               </button>
               {userEmail === email && (

@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useGetWishlistQuery } from "../redux/features/book/bookApi";
+import { useGetReadingQuery } from "../redux/features/book/bookApi";
 import Book from "../components/Book";
 import { IBook } from "../types/globaltypes";
 
-const Wishlist = () => {
+const CurrentlyReading = () => {
   const token = localStorage.getItem("accessToken");
-  const { data } = useGetWishlistQuery({ token });
+  const { data } = useGetReadingQuery({ token });
   return (
     <div>
-      <h1 className="text-4xl mb-10">Wishlisted Books</h1>
+      <h1 className="text-4xl mb-10">Currently Reading</h1>
       <div className="grid lg:grid-cols-5 md:grid-cols-3 gap-10">
-        {data?.data?.wishlist.map((book: IBook) => (
+        {data?.data?.reading.map((book: IBook) => (
           <Book
             key={book._id}
             _id={book._id}
@@ -29,4 +29,4 @@ const Wishlist = () => {
   );
 };
 
-export default Wishlist;
+export default CurrentlyReading;

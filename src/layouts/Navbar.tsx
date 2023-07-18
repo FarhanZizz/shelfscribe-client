@@ -29,6 +29,9 @@ const Navbar = () => {
             <Link to="user/wishlist">Wishlist</Link>
           </li>
           <li>
+            <Link to="user/currently-reading">Currently Reading</Link>
+          </li>
+          <li>
             <button onClick={handleLogout}>Logout</button>
           </li>
         </>
@@ -67,7 +70,7 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="navbar-end hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 gap-14">{menuItems}</ul>
+        <ul className="menu menu-horizontal px-1">{menuItems}</ul>
       </div>
     </div>
   );
