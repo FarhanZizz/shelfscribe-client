@@ -69,7 +69,7 @@ const UpdateBook = () => {
       toast.success(data.message);
       navigate("/all-books");
     } catch (err) {
-      toast.error(err.data.message);
+      isError && toast.error(error.data.message);
     }
   };
 

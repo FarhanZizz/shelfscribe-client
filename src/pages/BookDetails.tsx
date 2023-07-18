@@ -9,6 +9,7 @@ import {
   useSingleBookQuery,
   useCreateReviewMutation,
   useDeleteBookMutation,
+  useAddToWishlistMutation,
 } from "../redux/features/book/bookApi";
 import { useRef } from "react";
 import jwtDecode from "jwt-decode";
@@ -20,6 +21,7 @@ const BookDetails = () => {
   const params = useParams();
   const [deleteBook] = useDeleteBookMutation();
   const [createReview] = useCreateReviewMutation();
+  const [addToWishlist] = useAddToWishlistMutation();
 
   const token = localStorage.getItem("accessToken");
   const user = jwtDecode(token!);
@@ -65,6 +67,13 @@ const BookDetails = () => {
     toast.success("Book Deleted Successfully");
   };
 
+  const handleAddToWishlist = async () => {
+    const wishlist = { book: _id };
+    await addToWishlist({ data: wishlist, token: token }).then((data) => {
+      toast.success(data.data.message);
+    });
+  };
+
   return (
     <div className="mt-10 flex flex-col lg:flex-row gap-10">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:w-1/2  ">
@@ -72,7 +81,10 @@ const BookDetails = () => {
           <img src={image} className="h-80 w-60 mx-auto" alt="" />
           {token && email && (
             <div className="grid justify-center gap-2 my-3">
-              <button className="btn btn-primary w-60 btn-sm btn-outline">
+              <button
+                onClick={handleAddToWishlist}
+                className="btn btn-primary w-60 btn-sm btn-outline"
+              >
                 Add to Wishlist
               </button>
               <button className="btn btn-primary w-60 btn-sm btn-outline">

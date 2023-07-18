@@ -7,7 +7,7 @@ export const api = createApi({
     headers: { authorization: localStorage.getItem("accessToken") },
   }),
 
-  tagTypes: ["books"],
+  tagTypes: ["books", "wishlist"],
 
   endpoints: () => ({}),
 });

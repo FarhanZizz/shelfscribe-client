@@ -73,6 +73,15 @@ const bookApi = api.injectEndpoints({
       }),
       invalidatesTags: ["books"],
     }),
+    addToWishlist: builder.mutation<IGenericResponse, IGenericResponse>({
+      query: ({ data, token }) => ({
+        url: `/user/add-to-wishlist`,
+        method: "POST",
+        headers: { Authorization: token },
+        body: data,
+      }),
+      invalidatesTags: ["wishlist"],
+    }),
   }),
 });
 
@@ -84,4 +93,5 @@ export const {
   useCreateBookMutation,
   useDeleteBookMutation,
   useUpdateBookMutation,
+  useAddToWishlistMutation,
 } = bookApi;
