@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   useSingleBookQuery,
@@ -11,8 +12,9 @@ import { toast } from "react-hot-toast";
 import { useRef, RefObject } from "react";
 
 const BookDetails = () => {
-  const reviewInputRef: RefObject<HTMLInputElement | null> =
-    useRef<HTMLInputElement | null>(null);
+  const reviewInputRef: RefObject<HTMLTextAreaElement> =
+    useRef<HTMLTextAreaElement>(null);
+
   const navigate = useNavigate();
   const params = useParams();
   const [deleteBook] = useDeleteBookMutation();
@@ -52,12 +54,9 @@ const BookDetails = () => {
       review,
     };
 
-    await createReview({ bookId: params.id!, review: newReview }).then(
-      (data) => {
-        console.log(data);
-        toast.success("Review Added Successfully!");
-      }
-    );
+    await createReview({ bookId: params.id!, review: newReview }).then(() => {
+      toast.success("Review Added Successfully!");
+    });
 
     window.add_post.close();
   };
@@ -205,7 +204,7 @@ const BookDetails = () => {
                     {/* if there is a button in form, it will close the modal */}
                     <button
                       className="btn"
-                      onClick={() => {
+                      onClick={(event) => {
                         event.preventDefault();
                         window.add_post.close();
                       }}
