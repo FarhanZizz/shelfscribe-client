@@ -1,9 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   useSingleBookQuery,
@@ -12,7 +6,7 @@ import {
   useAddToWishlistMutation,
   useAddToReadingMutation,
 } from "../redux/features/book/bookApi";
-import { useRef } from "react";
+import { useRef, RefObject } from "react";
 import jwtDecode from "jwt-decode";
 import { toast } from "react-hot-toast";
 
@@ -25,11 +19,11 @@ const BookDetails = () => {
   const [addToWishlist, { error }] = useAddToWishlistMutation();
   const [addToReading, { error: errorMessage }] = useAddToReadingMutation();
 
-  const token = localStorage.getItem("accessToken");
-  const user = jwtDecode(token!);
+  const token = localStorage.getItem("accessToken")!;
+  const user: { email: string; name: string } = jwtDecode(token);
   const { name: username, email } = user;
 
-  const { data } = useSingleBookQuery(params.id!);
+  const { data } = useSingleBookQuery({ id: params.id! }!);
 
   if (!data) {
     return <div>Loading...</div>;
@@ -44,14 +38,14 @@ const BookDetails = () => {
     genre,
     publication,
     description,
-    reviews,
     userEmail,
   } = data?.data || {};
 
-  const handleAddReview = async (e) => {
+  const handleAddReview = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
-    const review = reviewInputRef.current.value;
+    const review: string = reviewInputRef.current.value || "";
+
     const newReview = { username, review };
 
     await createReview({ bookId: params.id, review: newReview }).then(
@@ -89,6 +83,9 @@ const BookDetails = () => {
         toast.error(errorMessage.data.message);
       });
   };
+
+  const allreviews: { username: string; review: string }[] =
+    data?.data?.reviews || [];
 
   return (
     <div className="mt-10 flex flex-col lg:flex-row gap-10">
@@ -223,8 +220,8 @@ const BookDetails = () => {
           )}
         </div>
         <div className="grid grid-cols-1 w-full gap-4">
-          {reviews.length ? (
-            reviews.map((review: { username: string; review: string }) => (
+          {allreviews.length ? (
+            allreviews.map((review: { username: string; review: string }) => (
               <div className="bg-base-200 px-5 py-3 rounded-lg">
                 <span className="text-sm text-primary">{review.username}</span>
                 <h1 className="text-lg">{review.review}</h1>

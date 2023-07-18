@@ -1,18 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
 import { toast } from "react-hot-toast";
 import { useCreateBookMutation } from "../redux/features/book/bookApi";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 const AddNewBook = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("accessToken");
-  const user = jwtDecode(token!);
+  const user: { email: string; nane: string } = jwtDecode(token!);
   const [createBook] = useCreateBookMutation();
+
   const handleSubmit = async (e: {
     preventDefault: () => void;
     target: any;

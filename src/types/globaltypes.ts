@@ -3,6 +3,25 @@ export type IReview = {
   review: string;
 };
 
+export interface WishlistData {
+  wishlist: IBook[];
+}
+export interface WishlistApiResponse {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: WishlistData;
+}
+export interface ReadingApiResponse {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: ReadingData;
+}
+export interface ReadingData {
+  reading: IBook[];
+}
+
 export type IBook = {
   _id: string;
   title: string;
@@ -19,4 +38,14 @@ export type IGenericResponse = {
   statusCode: number;
   message: string;
   data: IBook[];
+};
+export type ISingleBookResponse = {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: IBook;
+};
+export type IUser = {
+  email: string;
+  name: string;
 };

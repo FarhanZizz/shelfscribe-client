@@ -1,8 +1,10 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { IGenericResponse, IReview } from "../../../types/globaltypes";
+import {
+  IGenericResponse,
+  IReview,
+  ISingleBookResponse,
+  ReadingApiResponse,
+  WishlistApiResponse,
+} from "../../../types/globaltypes";
 import { api } from "../../api/apislice";
 
 const bookApi = api.injectEndpoints({
@@ -31,14 +33,17 @@ const bookApi = api.injectEndpoints({
       },
       providesTags: ["books"],
     }),
-    getRecentBooks: builder.query({
+    getRecentBooks: builder.query<IGenericResponse, undefined>({
       query: () => "/recent-books",
     }),
-    singleBook: builder.query({
-      query: (id: string) => `/book/${id}`,
+    singleBook: builder.query<ISingleBookResponse, { id: string }>({
+      query: ({ id }) => `/book/${id}`,
       providesTags: ["books"],
     }),
-    createBook: builder.mutation<IGenericResponse, IGenericResponse>({
+    createBook: builder.mutation<
+      IGenericResponse,
+      { data: IGenericResponse; token: string }
+    >({
       query: ({ data, token }) => ({
         url: `/add-new-book`,
         method: "POST",
@@ -47,7 +52,10 @@ const bookApi = api.injectEndpoints({
       }),
       invalidatesTags: ["books"],
     }),
-    updateBook: builder.mutation<IGenericResponse, IGenericResponse>({
+    updateBook: builder.mutation<
+      IGenericResponse,
+      { data: IGenericResponse; token: string; id: string }
+    >({
       query: ({ data, token, id }) => ({
         url: `/book/${id}`,
         method: "PATCH",
@@ -74,14 +82,17 @@ const bookApi = api.injectEndpoints({
       }),
       invalidatesTags: ["books"],
     }),
-    getWishlist: builder.query({
+    getWishlist: builder.query<WishlistApiResponse, { token: string }>({
       query: ({ token }) => ({
         url: `/user/wishlist`,
         headers: { Authorization: token },
         providesTags: ["books"],
       }),
     }),
-    addToWishlist: builder.mutation<IGenericResponse, IGenericResponse>({
+    addToWishlist: builder.mutation<
+      IGenericResponse,
+      { data: IGenericResponse; token: string }
+    >({
       query: ({ data, token }) => ({
         url: `/user/add-to-wishlist`,
         method: "POST",
@@ -90,7 +101,10 @@ const bookApi = api.injectEndpoints({
       }),
       invalidatesTags: ["wishlist"],
     }),
-    addToReading: builder.mutation<IGenericResponse, IGenericResponse>({
+    addToReading: builder.mutation<
+      IGenericResponse,
+      { data: IGenericResponse; token: string }
+    >({
       query: ({ data, token }) => ({
         url: `/user/add-to-reading`,
         method: "POST",
@@ -99,7 +113,7 @@ const bookApi = api.injectEndpoints({
       }),
       invalidatesTags: ["reading"],
     }),
-    getReading: builder.query({
+    getReading: builder.query<ReadingApiResponse, { token: string }>({
       query: ({ token }) => ({
         url: `/user/reading`,
         headers: { Authorization: token },
