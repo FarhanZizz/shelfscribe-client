@@ -62,7 +62,7 @@ const BookDetails = () => {
   };
 
   const handleBookDelete = async () => {
-    await deleteBook(params.id!);
+    await deleteBook({ id: params.id!, token: token });
     navigate("/all-books");
     toast.success("Book Deleted Successfully");
   };

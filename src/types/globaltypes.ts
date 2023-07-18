@@ -2,6 +2,9 @@ export type IReview = {
   username: string;
   review: string;
 };
+export type IAccessToken = {
+  accessToken: string;
+};
 
 export interface WishlistData {
   wishlist: IBook[];
@@ -38,6 +41,12 @@ export type IGenericResponse = {
   statusCode: number;
   message: string;
   data: IBook[];
+};
+export type ILoginResponse = {
+  success: boolean;
+  statusCode: number;
+  message: string;
+  data: IAccessToken;
 };
 export type ISingleBookResponse = {
   success: boolean;

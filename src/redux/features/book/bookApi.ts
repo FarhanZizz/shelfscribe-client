@@ -64,10 +64,14 @@ const bookApi = api.injectEndpoints({
       }),
       invalidatesTags: ["books"],
     }),
-    deleteBook: builder.mutation<IGenericResponse, string>({
-      query: (id: string) => ({
+    deleteBook: builder.mutation<
+      IGenericResponse,
+      { id: string; token: string }
+    >({
+      query: ({ id, token }) => ({
         url: `/book/${id}`,
         method: "DELETE",
+        headers: { Authorization: token },
       }),
       invalidatesTags: ["books"],
     }),

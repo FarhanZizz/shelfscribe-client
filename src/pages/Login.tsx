@@ -1,24 +1,37 @@
-import { Link, Router, useNavigate } from "react-router-dom";
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import { Link, useNavigate } from "react-router-dom";
 import img from "../assets/book.png";
 import { useUserLoginMutation } from "../redux/features/user/userApi";
+import { useRef } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [userLogin, { isLoading, isError, error }] = useUserLoginMutation();
+  const [userLogin, { isError, error }] = useUserLoginMutation();
 
-  const handleSubmit = async (e) => {
+  console.log(error);
+  // Create refs for the input elements
+  const emailInputRef = useRef<HTMLInputElement | null>(null);
+  const passwordInputRef = useRef<HTMLInputElement | null>(null);
+
+  const handleSubmit = async (e: {
+    preventDefault: () => void;
+    target: object;
+  }) => {
     e.preventDefault();
-    const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
-    await userLogin({ email, password }).then((result) => {
-      // Check if the login was successful
-      if (result.data.success) {
-        // If successful, set the access token to localStorage
-        localStorage.setItem("accessToken", result.data.data.accessToken);
-        navigate("/all-books");
-      }
-    });
+    const email: string = emailInputRef.current!.value;
+    const password: string = passwordInputRef.current!.value;
+    const result = await userLogin({ email, password });
+
+    if ("error" in result) {
+      // Handle the error here, for example, displaying an error message
+      console.error("Login error:", result.error);
+    } else if (result.data.success) {
+      // If successful, set the access token to localStorage and navigate to the desired page
+      localStorage.setItem("accessToken", result.data.data.accessToken);
+      navigate("/all-books");
+    }
   };
 
   return (
@@ -32,7 +45,7 @@ const Login = () => {
       <div className="md:w-4/5 mx-auto">
         <form onSubmit={handleSubmit}>
           <h1 className="text-3xl font-bold mb-5 ">Welcome back, Reader!</h1>
-          {isError ? (
+          {error ? (
             <h1 className="text-sm text-error">{error.data.message}</h1>
           ) : (
             <h1 className="text-sm">Our ship has been adrift without you.</h1>
@@ -42,6 +55,7 @@ const Login = () => {
             className="rounded-none bg-transparent focus:outline-0 input input-ghost border-0 border-b-2 border-b-primary w-full my-4"
             type="email"
             name="email"
+            ref={emailInputRef}
             required
           />
           <input
@@ -49,6 +63,7 @@ const Login = () => {
             className="rounded-none bg-transparent focus:outline-0 input input-ghost border-0 border-b-2 border-b-primary w-full my-4"
             type="password"
             name="password"
+            ref={passwordInputRef}
             required
           />
           <div className="flex justify-between items-center">

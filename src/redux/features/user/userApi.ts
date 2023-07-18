@@ -1,16 +1,16 @@
 import { api } from "../../api/apislice";
-import { IGenericResponse } from "../../../types/globaltypes";
+import { IGenericResponse, ILoginResponse } from "../../../types/globaltypes";
 
 const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
     userLogin: builder.mutation<
-      IGenericResponse,
+      ILoginResponse,
       { email: string; password: string }
     >({
-      query: (credentials) => ({
+      query: ({ email, password }) => ({
         url: "/auth/login",
         method: "POST",
-        body: credentials,
+        body: { email, password },
       }),
     }),
     userSignup: builder.mutation<
