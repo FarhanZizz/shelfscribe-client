@@ -8,9 +8,7 @@ import { useRef } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [userLogin, { isError, error }] = useUserLoginMutation();
-
-  console.log(error);
+  const [userLogin, { error }] = useUserLoginMutation();
   // Create refs for the input elements
   const emailInputRef = useRef<HTMLInputElement | null>(null);
   const passwordInputRef = useRef<HTMLInputElement | null>(null);
@@ -26,7 +24,6 @@ const Login = () => {
 
     if ("error" in result) {
       // Handle the error here, for example, displaying an error message
-      console.error("Login error:", result.error);
     } else if (result.data.success) {
       // If successful, set the access token to localStorage and navigate to the desired page
       localStorage.setItem("accessToken", result.data.data.accessToken);
@@ -46,7 +43,13 @@ const Login = () => {
         <form onSubmit={handleSubmit}>
           <h1 className="text-3xl font-bold mb-5 ">Welcome back, Reader!</h1>
           {error ? (
-            <h1 className="text-sm text-error">{error.data.message}</h1>
+            "data" in error ? (
+              <h1 className="text-sm text-error">
+                {(error as any).data.message}
+              </h1>
+            ) : (
+              <h1 className="text-sm text-error">Unknown error occurred.</h1>
+            )
           ) : (
             <h1 className="text-sm">Our ship has been adrift without you.</h1>
           )}

@@ -1,4 +1,8 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { Link, useNavigate } from "react-router-dom";
 import img from "../assets/books.png";
 import {
@@ -8,10 +12,13 @@ import {
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [userSignup, { isLoading, isError, error }] = useUserSignupMutation();
+  const [userSignup, { isError, error }] = useUserSignupMutation();
   const [userLogin] = useUserLoginMutation();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: {
+    preventDefault: () => void;
+    target: any;
+  }) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
@@ -19,10 +26,13 @@ const Signup = () => {
     const name = form.name.value;
 
     const signupResult = await userSignup({ email, password, name });
-    if (signupResult.data.success === true) {
+    if ((signupResult as any).data.success === true) {
       const loginResult = await userLogin({ email, password });
       // If successful, set the access token to localStorage
-      localStorage.setItem("accessToken", loginResult.data.data.accessToken);
+      localStorage.setItem(
+        "accessToken",
+        (loginResult as any).data.data.accessToken
+      );
       navigate("/all-books");
     }
   };
@@ -39,7 +49,9 @@ const Signup = () => {
         <form onSubmit={handleSubmit}>
           <h1 className="text-3xl font-bold mb-5">Join us today!</h1>
           {isError ? (
-            <h1 className="text-sm text-error">{error?.data?.message}</h1>
+            <h1 className="text-sm text-error">
+              {(error as any)?.data?.message}
+            </h1>
           ) : (
             <h1 className="text-sm">
               Become one of the cool kids on the block.

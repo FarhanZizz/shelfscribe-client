@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -9,12 +13,11 @@ import jwtDecode from "jwt-decode";
 
 const UpdateBook = () => {
   const navigate = useNavigate();
-  const reviewInputRef = useRef("");
   const params = useParams();
   const token = localStorage.getItem("accessToken");
-  const user = jwtDecode(token!);
+  const user: { email: string; name: string } = jwtDecode(token!);
 
-  const { data } = useSingleBookQuery(params.id!);
+  const { data } = useSingleBookQuery({ id: params.id! });
   const [UpdateBook, { isError, error }] = useUpdateBookMutation();
 
   if (!data) {
@@ -27,7 +30,7 @@ const UpdateBook = () => {
 
   const handleSubmit = async (e: {
     preventDefault: () => void;
-    target: any;
+    target: object;
   }) => {
     e.preventDefault();
     const form = e.target;
