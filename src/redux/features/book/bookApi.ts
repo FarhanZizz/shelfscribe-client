@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -73,6 +74,13 @@ const bookApi = api.injectEndpoints({
       }),
       invalidatesTags: ["books"],
     }),
+    getWishlist: builder.query({
+      query: ({ token }) => ({
+        url: `/user/wishlist`,
+        headers: { Authorization: token },
+        providesTags: ["books"],
+      }),
+    }),
     addToWishlist: builder.mutation<IGenericResponse, IGenericResponse>({
       query: ({ data, token }) => ({
         url: `/user/add-to-wishlist`,
@@ -94,4 +102,5 @@ export const {
   useDeleteBookMutation,
   useUpdateBookMutation,
   useAddToWishlistMutation,
+  useGetWishlistQuery,
 } = bookApi;

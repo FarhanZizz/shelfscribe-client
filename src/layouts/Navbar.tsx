@@ -26,6 +26,9 @@ const Navbar = () => {
             <Link to="add-new-book">Add New Book</Link>
           </li>
           <li>
+            <Link to="user/wishlist">Wishlist</Link>
+          </li>
+          <li>
             <button onClick={handleLogout}>Logout</button>
           </li>
         </>

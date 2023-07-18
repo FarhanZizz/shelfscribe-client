@@ -21,7 +21,7 @@ const BookDetails = () => {
   const params = useParams();
   const [deleteBook] = useDeleteBookMutation();
   const [createReview] = useCreateReviewMutation();
-  const [addToWishlist] = useAddToWishlistMutation();
+  const [addToWishlist, { error }] = useAddToWishlistMutation();
 
   const token = localStorage.getItem("accessToken");
   const user = jwtDecode(token!);
@@ -69,9 +69,13 @@ const BookDetails = () => {
 
   const handleAddToWishlist = async () => {
     const wishlist = { book: _id };
-    await addToWishlist({ data: wishlist, token: token }).then((data) => {
-      toast.success(data.data.message);
-    });
+    await addToWishlist({ data: wishlist, token: token })
+      .then((data) => {
+        toast.success(data.data.message);
+      })
+      .catch((err) => {
+        toast.error(error.data.message);
+      });
   };
 
   return (
