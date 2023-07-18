@@ -91,12 +91,12 @@ const bookApi = api.injectEndpoints({
       query: ({ token }) => ({
         url: `/user/wishlist`,
         headers: { Authorization: token },
-        providesTags: ["books"],
+        providesTags: ["wishlist"],
       }),
     }),
     addToWishlist: builder.mutation<
       IGenericResponse,
-      { data: { book: string }; token: string }
+      { data: { book: string | undefined }; token: string }
     >({
       query: ({ data, token }) => ({
         url: `/user/add-to-wishlist`,
@@ -106,9 +106,16 @@ const bookApi = api.injectEndpoints({
       }),
       invalidatesTags: ["wishlist"],
     }),
+    getReading: builder.query<ReadingApiResponse, { token: string }>({
+      query: ({ token }) => ({
+        url: `/user/reading`,
+        headers: { Authorization: token },
+        providesTags: ["reading"],
+      }),
+    }),
     addToReading: builder.mutation<
       IGenericResponse,
-      { data: { book: string }; token: string }
+      { data: { book: string | undefined }; token: string }
     >({
       query: ({ data, token }) => ({
         url: `/user/add-to-reading`,
@@ -117,13 +124,6 @@ const bookApi = api.injectEndpoints({
         body: data,
       }),
       invalidatesTags: ["reading"],
-    }),
-    getReading: builder.query<ReadingApiResponse, { token: string }>({
-      query: ({ token }) => ({
-        url: `/user/reading`,
-        headers: { Authorization: token },
-        providesTags: ["reading"],
-      }),
     }),
   }),
 });

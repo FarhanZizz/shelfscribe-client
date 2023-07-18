@@ -113,7 +113,7 @@ const BookDetails = () => {
               {userEmail === email && (
                 <>
                   <Link
-                    to={`/edit-book/${_id}`}
+                    to={`/edit-book/${_id!}`}
                     className="btn btn-primary w-60 btn-sm btn-outline"
                   >
                     Edit Book
