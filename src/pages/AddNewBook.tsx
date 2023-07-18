@@ -1,14 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { toast } from "react-hot-toast";
 import { useCreateBookMutation } from "../redux/features/book/bookApi";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 const AddNewBook = () => {
   const navigate = useNavigate();
-  const token = localStorage.getItem("accessToken");
-  const user: { email: string; nane: string } = jwtDecode(token!);
+  const token: string = localStorage.getItem("accessToken")!;
+  const user: { email: string; nane: string } = jwtDecode(token);
   const [createBook] = useCreateBookMutation();
 
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
+  const handleSubmit = async (e: {
+    preventDefault: () => void;
+    target: any;
+  }) => {
     e.preventDefault();
     const form = e.target;
     const title = form.title.value;
@@ -34,11 +42,11 @@ const AddNewBook = () => {
         userEmail: user.email,
       };
 
-      const { data } = await createBook({ data: bookData, token });
-      toast.success(data.message);
+      const result = await createBook({ data: bookData, token });
+      toast.success((result as any).data.message);
       navigate("/all-books");
     } catch (err) {
-      toast.error(err.data.message);
+      toast.error((err as any).data.message);
     }
   };
   return (

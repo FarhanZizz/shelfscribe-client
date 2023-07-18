@@ -1,8 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   useSingleBookQuery,
@@ -14,8 +14,8 @@ import jwtDecode from "jwt-decode";
 const UpdateBook = () => {
   const navigate = useNavigate();
   const params = useParams();
-  const token = localStorage.getItem("accessToken");
-  const user: { email: string; name: string } = jwtDecode(token!);
+  const token: string = localStorage.getItem("accessToken")!;
+  const user: { email: string; name: string } = jwtDecode(token);
 
   const { data } = useSingleBookQuery({ id: params.id! });
   const [UpdateBook, { isError, error }] = useUpdateBookMutation();
@@ -25,12 +25,12 @@ const UpdateBook = () => {
   }
 
   // Use optional chaining to safely access properties of 'data' object
-  const { image, title, author, genre, publication, description } =
+  const { _id, image, title, author, genre, publication, description } =
     data?.data || {};
 
   const handleSubmit = async (e: {
     preventDefault: () => void;
-    target: object;
+    target: any;
   }) => {
     e.preventDefault();
     const form = e.target;
@@ -48,6 +48,7 @@ const UpdateBook = () => {
 
     try {
       const bookData = {
+        _id,
         title,
         author,
         genre,
@@ -57,15 +58,15 @@ const UpdateBook = () => {
         userEmail: user.email,
       };
 
-      const { data } = await UpdateBook({
+      const result = await UpdateBook({
         data: bookData,
         token,
-        id: params.id,
+        id: params.id!,
       });
-      toast.success(data.message);
+      toast.success((result as any).data.message);
       navigate("/all-books");
     } catch (err) {
-      isError && toast.error(error.data.message);
+      isError && toast.error((error as any).data.message);
     }
   };
 

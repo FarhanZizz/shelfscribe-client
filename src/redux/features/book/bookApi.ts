@@ -1,4 +1,5 @@
 import {
+  IBook,
   IGenericResponse,
   IReview,
   ISingleBookResponse,
@@ -42,7 +43,7 @@ const bookApi = api.injectEndpoints({
     }),
     createBook: builder.mutation<
       IGenericResponse,
-      { data: IGenericResponse; token: string }
+      { data: IBook; token: string }
     >({
       query: ({ data, token }) => ({
         url: `/add-new-book`,
@@ -54,7 +55,7 @@ const bookApi = api.injectEndpoints({
     }),
     updateBook: builder.mutation<
       IGenericResponse,
-      { data: IGenericResponse; token: string; id: string }
+      { data: IBook; token: string; id: string }
     >({
       query: ({ data, token, id }) => ({
         url: `/book/${id}`,
